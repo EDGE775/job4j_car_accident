@@ -28,6 +28,13 @@
 <body>
 <div class="container pt-3">
     <div class="row">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value='/create'/>">Добавить инцидент</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
                 Все заявления
@@ -47,6 +54,9 @@
                     <c:forEach items="${accidents}" var="accident" begin="0" step="1" varStatus="status">
                         <tr>
                             <td class="align-middle">
+                                <a href="<c:url value="/edit?id=${accident.id}"/>">
+                                    <i class="fa fa-edit mr-3"></i>
+                                </a>
                                 <c:out value="${accident.id}"/>
                             </td>
                             <td class="align-middle">
