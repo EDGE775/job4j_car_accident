@@ -3,15 +3,20 @@ package ru.job4j.accident.control;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
+import ru.job4j.accident.service.AccidentService;
 
 @Controller
 public class IndexControl {
+
+    private final AccidentService accidentService;
+
+    public IndexControl(AccidentService accidentService) {
+        this.accidentService = accidentService;
+    }
+
     @GetMapping("/")
     public String index(Model model) {
-        List<String> users = List.of("Дмитрий Хлапов", "Мария Машина", "Киса Воробьянинов");
-        model.addAttribute("users", users);
+        model.addAttribute("accidents", accidentService.findAllAccidents());
         return "index";
     }
 }

@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -26,26 +28,45 @@
 <body>
 <div class="container pt-3">
     <div class="row">
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">Номер</th>
-                <th scope="col">Пользователь</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${users}" var="user" begin="0" step="1" varStatus="status">
-                <tr>
-                    <td class="align-middle">
-                        <c:out value="${status.index + 1}"/>
-                    </td>
-                    <td>
-                        <c:out value="${user}"/>
-                    </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
+        <div class="card" style="width: 100%">
+            <div class="card-header">
+                Все заявления
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Номер</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Описание</th>
+                        <th scope="col">Адрес</th>
+                        <th scope="col">Дата</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${accidents}" var="accident" begin="0" step="1" varStatus="status">
+                        <tr>
+                            <td class="align-middle">
+                                <c:out value="${accident.id}"/>
+                            </td>
+                            <td class="align-middle">
+                                <c:out value="${accident.name}"/>
+                            </td>
+                            <td class="align-middle">
+                                <c:out value="${accident.text}"/>
+                            </td>
+                            <td class="align-middle">
+                                <c:out value="${accident.address}"/>
+                            </td>
+                            <td class="align-middle">
+                                <fmt:formatDate value="${accident.created}" pattern="yy-MM-dd HH:mm:ss"/>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 </body>
