@@ -47,14 +47,14 @@
                         <th scope="col">Название</th>
                         <th scope="col">Описание</th>
                         <th scope="col">Адрес</th>
-                        <th scope="col">Дата</th>
+                        <th scope="col">Дата изменения</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${accidents}" var="accident" begin="0" step="1" varStatus="status">
                         <tr>
                             <td class="align-middle">
-                                <a href="<c:url value="/edit?id=${accident.id}"/>">
+                                <a href="<c:url value="/update?id=${accident.id}"/>">
                                     <i class="fa fa-edit mr-3"></i>
                                 </a>
                                 <c:out value="${accident.id}"/>
