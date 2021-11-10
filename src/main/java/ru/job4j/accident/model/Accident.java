@@ -13,12 +13,15 @@ public class Accident {
 
     private String address;
 
+    private AccidentType type;
+
     private Date created = new Date(System.currentTimeMillis());
 
-    public Accident(String name, String text, String address) {
+    public Accident(String name, String text, String address, AccidentType type) {
         this.name = name;
         this.text = text;
         this.address = address;
+        this.type = type;
     }
 
     public int getId() {
@@ -59,6 +62,14 @@ public class Accident {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public AccidentType getType() {
+        return type;
+    }
+
+    public void setType(AccidentType type) {
+        this.type = type;
     }
 
     @Override

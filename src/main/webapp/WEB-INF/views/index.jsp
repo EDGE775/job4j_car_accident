@@ -47,6 +47,7 @@
                         <th scope="col">Название</th>
                         <th scope="col">Описание</th>
                         <th scope="col">Адрес</th>
+                        <th scope="col">Тип</th>
                         <th scope="col">Дата изменения</th>
                     </tr>
                     </thead>
@@ -67,6 +68,9 @@
                             </td>
                             <td class="align-middle">
                                 <c:out value="${accident.address}"/>
+                            </td>
+                            <td class="align-middle">
+                                <c:out value="${accident.type.name}"/>
                             </td>
                             <td class="align-middle">
                                 <fmt:formatDate value="${accident.created}" pattern="yy-MM-dd HH:mm:ss"/>

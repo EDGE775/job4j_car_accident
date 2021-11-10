@@ -2,6 +2,7 @@ package ru.job4j.accident.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Accident;
+import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.repository.AccidentMem;
 
 import java.util.Comparator;
@@ -28,10 +29,21 @@ public class AccidentService {
         return accidentMem.findAccidentById(id);
     }
 
-        public List<Accident> findAllAccidents() {
+    public List<Accident> findAllAccidents() {
         return accidentMem.findAllAccidents()
                 .stream()
                 .sorted(Comparator.comparingInt(Accident::getId))
+                .collect(Collectors.toList());
+    }
+
+    public AccidentType findAccidentTypeById(int id) {
+        return accidentMem.findAccidentTypeById(id);
+    }
+
+        public List<AccidentType> findAllAccidentTypes() {
+        return accidentMem.findAllAccidentTypes()
+                .stream()
+                .sorted(Comparator.comparingInt(AccidentType::getId))
                 .collect(Collectors.toList());
     }
 }
