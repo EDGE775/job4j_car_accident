@@ -48,16 +48,15 @@
                         <th scope="col">Описание</th>
                         <th scope="col">Адрес</th>
                         <th scope="col">Тип</th>
+                        <th scope="col">Статья</th>
                         <th scope="col">Дата изменения</th>
+                        <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${accidents}" var="accident" begin="0" step="1" varStatus="status">
                         <tr>
                             <td class="align-middle">
-                                <a href="<c:url value="/update?id=${accident.id}"/>">
-                                    <i class="fa fa-edit mr-3"></i>
-                                </a>
                                 <c:out value="${accident.id}"/>
                             </td>
                             <td class="align-middle">
@@ -72,8 +71,18 @@
                             <td class="align-middle">
                                 <c:out value="${accident.type.name}"/>
                             </td>
+                            <td>
+                                <c:forEach items="${accident.rules}" var="rule">
+                                    ${rule.name}<br>
+                                </c:forEach>
+                            </td>
                             <td class="align-middle">
                                 <fmt:formatDate value="${accident.created}" pattern="yy-MM-dd HH:mm:ss"/>
+                            </td>
+                            <td class="align-middle">
+                                <a href="<c:url value="/update?id=${accident.id}"/>">
+                                    <i class="material-icons">edit</i>
+                                </a>
                             </td>
                         </tr>
                     </c:forEach>

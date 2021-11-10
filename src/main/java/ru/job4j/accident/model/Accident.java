@@ -1,7 +1,9 @@
 package ru.job4j.accident.model;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Accident {
 
@@ -15,6 +17,8 @@ public class Accident {
 
     private AccidentType type;
 
+    private Set<Rule> rules = new HashSet<>();
+
     private Date created = new Date(System.currentTimeMillis());
 
     public Accident(String name, String text, String address, AccidentType type) {
@@ -22,6 +26,10 @@ public class Accident {
         this.text = text;
         this.address = address;
         this.type = type;
+    }
+
+    public boolean hasRule(Rule rule) {
+        return rules.contains(rule);
     }
 
     public int getId() {
@@ -70,6 +78,14 @@ public class Accident {
 
     public void setType(AccidentType type) {
         this.type = type;
+    }
+
+    public Set<Rule> getRules() {
+        return rules;
+    }
+
+    public void setRules(Set<Rule> rules) {
+        this.rules = rules;
     }
 
     @Override

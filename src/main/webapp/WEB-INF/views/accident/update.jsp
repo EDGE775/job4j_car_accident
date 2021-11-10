@@ -43,18 +43,24 @@
                     </div>
                     <div class="form-group">
                         <label>Адрес</label>
-                        <input type="text" class="form-control" name="address" id="address" value="${accident.address}" required>
+                        <input type="text" class="form-control" name="address" id="address" value="${accident.address}"
+                               required>
                     </div>
                     <div class="form-group">
                         <label>Тип</label>
                         <select name="type.id" class="form-control">
                             <c:forEach var="type" items="${types}">
-                                <c:if test="${type.id != accident.type.id}">
-                                <option value="${type.id}">${type.name}</option>
-                                </c:if>
-                                <c:if test="${type.id == accident.type.id}">
-                                    <option value="${type.id}" selected>${type.name}</option>
-                                </c:if>
+                                <option value="${type.id}"
+                                        <c:if test="${accident.type.id == type.id}">selected</c:if>>${type.name}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Статьи</label>
+                        <select name="rIds" class="form-control" multiple required>
+                            <c:forEach var="rule" items="${rules}">
+                                <option value="${rule.id}"
+                                        <c:if test="${accident.hasRule(rule)}">selected</c:if>>${rule.name}</option>
                             </c:forEach>
                         </select>
                     </div>

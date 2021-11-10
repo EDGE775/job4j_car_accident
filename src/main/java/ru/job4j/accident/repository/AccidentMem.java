@@ -3,6 +3,7 @@ package ru.job4j.accident.repository;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
+import ru.job4j.accident.model.Rule;
 
 import java.util.Collection;
 import java.util.Map;
@@ -18,10 +19,16 @@ public class AccidentMem {
 
     private final Map<Integer, AccidentType> types = new ConcurrentHashMap<>();
 
+    private final Map<Integer, Rule> rules = new ConcurrentHashMap<>();
+
     public AccidentMem() {
         this.saveAccidentType(AccidentType.of(1, "Две машины"));
         this.saveAccidentType(AccidentType.of(2, "Машина и человек"));
         this.saveAccidentType(AccidentType.of(3, "Машина и велосипед"));
+
+        this.saveRule(Rule.of(1, "Статья. 1"));
+        this.saveRule(Rule.of(2, "Статья. 2"));
+        this.saveRule(Rule.of(3, "Статья. 3"));
 
         this.saveOrUpdateAccident(
                 new Accident("Заявка 1", "Неправильная парковка", "Ул. Кукунина", types.get(1)));
@@ -58,5 +65,17 @@ public class AccidentMem {
 
     public AccidentType findAccidentTypeById(int id) {
         return types.get(id);
+    }
+
+    public Collection<Rule> findAllRules() {
+        return rules.values();
+    }
+
+    public void saveRule(Rule rule) {
+        rules.put(rule.getId(), rule);
+    }
+
+    public Rule findRuleById(int id) {
+        return rules.get(id);
     }
 }
