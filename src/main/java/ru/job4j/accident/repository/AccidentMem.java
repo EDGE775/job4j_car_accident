@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
-public class AccidentMem {
+public class AccidentMem implements AccidentRepository {
 
     private static final AtomicInteger ACCIDENT_ID = new AtomicInteger(0);
 
@@ -39,6 +39,7 @@ public class AccidentMem {
 
     }
 
+    @Override
     public Accident saveOrUpdateAccident(Accident accident) {
         if (accident.getId() == 0) {
             accident.setId(ACCIDENT_ID.incrementAndGet());
@@ -47,14 +48,17 @@ public class AccidentMem {
         return accident;
     }
 
+    @Override
     public Collection<Accident> findAllAccidents() {
         return accidents.values();
     }
 
+    @Override
     public Accident findAccidentById(int id) {
         return accidents.get(id);
     }
 
+    @Override
     public Collection<AccidentType> findAllAccidentTypes() {
         return types.values();
     }
@@ -63,10 +67,12 @@ public class AccidentMem {
         types.put(type.getId(), type);
     }
 
+    @Override
     public AccidentType findAccidentTypeById(int id) {
         return types.get(id);
     }
 
+    @Override
     public Collection<Rule> findAllRules() {
         return rules.values();
     }
@@ -75,6 +81,7 @@ public class AccidentMem {
         rules.put(rule.getId(), rule);
     }
 
+    @Override
     public Rule findRuleById(int id) {
         return rules.get(id);
     }

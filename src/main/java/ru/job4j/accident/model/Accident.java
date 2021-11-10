@@ -21,6 +21,9 @@ public class Accident {
 
     private Date created = new Date(System.currentTimeMillis());
 
+    public Accident() {
+    }
+
     public Accident(String name, String text, String address, AccidentType type) {
         this.name = name;
         this.text = text;
