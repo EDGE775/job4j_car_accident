@@ -9,9 +9,7 @@ import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.service.AccidentService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 public class AccidentControl {
@@ -42,17 +40,8 @@ public class AccidentControl {
 
     @PostMapping("/save")
     public String save(@ModelAttribute Accident accident, HttpServletRequest req) {
-        accident.setType(service.findAccidentTypeById(accident.getType().getId()));
         String[] ids = req.getParameterValues("rIds");
-        if (ids != null) {
-            Set<Rule> rules = new HashSet<>();
-            for (String id : ids) {
-                Rule rule = service.findRuleById(Integer.parseInt(id));
-                rules.add(rule);
-            }
-            accident.setRules(rules);
-        }
-        service.saveOrUpdateAccident(accident);
+        service.saveOrUpdateAccident(accident, ids);
         return "redirect:/";
     }
 

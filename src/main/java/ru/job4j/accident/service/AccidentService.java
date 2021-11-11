@@ -7,7 +7,9 @@ import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.repository.AccidentRepository;
 
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,10 +21,17 @@ public class AccidentService {
         this.accidentRepository = accidentRepository;
     }
 
-    public Accident saveOrUpdateAccident(Accident accident) {
+    public Accident saveOrUpdateAccident(Accident accident, String[] ids) {
         if (accident == null) {
             throw new IllegalArgumentException("Аргумент не можеть быть null");
         }
+        Set<Rule> rules = new HashSet<>();
+        for (String id : ids) {
+            Rule rule = findRuleById(Integer.parseInt(id));
+            rules.add(rule);
+        }
+        accident.setRules(rules);
+        accident.setType(findAccidentTypeById(accident.getType().getId()));
         return accidentRepository.saveOrUpdateAccident(accident);
     }
 
