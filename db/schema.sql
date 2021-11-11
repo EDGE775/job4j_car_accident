@@ -22,9 +22,9 @@ CREATE TABLE accidents
 
 CREATE TABLE accidents_rules
 (
-    id          serial primary key,
     rule_id     int references rules (id)     not null,
-    accident_id int references accidents (id) not null
+    accident_id int references accidents (id) not null,
+    primary key (accident_id, rule_id)
 );
 
 INSERT INTO types(name)

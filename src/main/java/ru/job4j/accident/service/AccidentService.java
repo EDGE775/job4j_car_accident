@@ -1,6 +1,5 @@
 package ru.job4j.accident.service;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
@@ -42,11 +41,15 @@ public class AccidentService {
         return accidentRepository.findAccidentTypeById(id);
     }
 
-        public List<AccidentType> findAllAccidentTypes() {
+    public List<AccidentType> findAllAccidentTypes() {
         return accidentRepository.findAllAccidentTypes()
                 .stream()
                 .sorted(Comparator.comparingInt(AccidentType::getId))
                 .collect(Collectors.toList());
+    }
+
+    public void deleteAccidentById(int id) {
+        accidentRepository.deleteAccidentById(id);
     }
 
     public Rule findRuleById(int id) {

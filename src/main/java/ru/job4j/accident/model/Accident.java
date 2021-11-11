@@ -1,12 +1,16 @@
 package ru.job4j.accident.model;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@Entity
+@Table(name = "accidents")
 public class Accident {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
@@ -15,10 +19,17 @@ public class Accident {
 
     private String address;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "type_id")
     private AccidentType type;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "accidents_rules",
+            joinColumns = @JoinColumn(name = "accident_id"),
+            inverseJoinColumns = @JoinColumn(name = "rule_id"))
     private Set<Rule> rules = new HashSet<>();
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date created = new Date(System.currentTimeMillis());
 
     public Accident() {

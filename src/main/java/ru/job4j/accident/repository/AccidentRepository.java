@@ -13,6 +13,8 @@ public interface AccidentRepository {
 
     Accident findAccidentById(int id);
 
+    void deleteAccidentById(int id);
+
     Collection<AccidentType> findAllAccidentTypes();
 
     AccidentType findAccidentTypeById(int id);

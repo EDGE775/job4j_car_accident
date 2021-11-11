@@ -59,6 +59,11 @@ public class AccidentMem implements AccidentRepository {
     }
 
     @Override
+    public void deleteAccidentById(int id) {
+        accidents.remove(id);
+    }
+
+    @Override
     public Collection<AccidentType> findAllAccidentTypes() {
         return types.values();
     }

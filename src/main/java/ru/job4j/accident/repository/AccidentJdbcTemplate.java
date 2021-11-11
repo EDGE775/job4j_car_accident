@@ -16,8 +16,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-@Primary
-@Repository
+//@Repository
 public class AccidentJdbcTemplate implements AccidentRepository {
 
     private final JdbcTemplate jdbc;
@@ -139,6 +138,16 @@ public class AccidentJdbcTemplate implements AccidentRepository {
                 }, id);
         accident.setRules(new HashSet<>(rules));
         return accident;
+    }
+
+    @Override
+    public void deleteAccidentById(int id) {
+        jdbc.update(
+                "delete from accidents_rules where accident_id = ?",
+                id);
+        jdbc.update(
+                "delete from accidents where id = ?",
+                id);
     }
 
     @Override
