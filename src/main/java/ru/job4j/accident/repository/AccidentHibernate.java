@@ -10,9 +10,7 @@ import ru.job4j.accident.model.Rule;
 
 import java.util.Collection;
 
-@Primary
-@Repository
-public class AccidentHibernate implements AccidentRepository {
+public class AccidentHibernate implements StandardAccidentRepositoryInterface {
     private final SessionFactory sf;
 
     public AccidentHibernate(SessionFactory sf) {

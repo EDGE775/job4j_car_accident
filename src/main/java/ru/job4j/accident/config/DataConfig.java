@@ -1,22 +1,26 @@
 package ru.job4j.accident.config;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+@Configuration
 @PropertySource("classpath:app.properties")
+@EnableJpaRepositories("ru.job4j.accident.repository")
 @EnableTransactionManagement
-public class HbmConfig {
+public class DataConfig {
 
     @Bean
     public DataSource ds(@Value("${jdbc.driver}") String driver,
@@ -32,24 +36,26 @@ public class HbmConfig {
     }
 
     @Bean
-    public LocalSessionFactoryBean sessionFactory(DataSource ds) {
-        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setDataSource(ds);
-        sessionFactory.setPackagesToScan("ru.job4j.accident.model");
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource ds) {
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        vendorAdapter.setGenerateDdl(true);
         Properties cfg = new Properties();
         cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL10Dialect");
         cfg.setProperty("hibernate.show_sql", "true");
         cfg.setProperty("hibernate.format_sql", "true");
         cfg.setProperty("hibernate.use_sql_comments", "true");
-        cfg.setProperty("hibernate.hbm2ddl.auto", "update");
-        sessionFactory.setHibernateProperties(cfg);
-        return sessionFactory;
+        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+        factory.setJpaVendorAdapter(vendorAdapter);
+        factory.setPackagesToScan("ru.job4j.accident");
+        factory.setDataSource(ds);
+        factory.setJpaProperties(cfg);
+        return factory;
     }
 
     @Bean
-    public PlatformTransactionManager htx(SessionFactory sf) {
-        HibernateTransactionManager tx = new HibernateTransactionManager();
-        tx.setSessionFactory(sf);
-        return tx;
+    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+        JpaTransactionManager txManager = new JpaTransactionManager();
+        txManager.setEntityManagerFactory(entityManagerFactory);
+        return txManager;
     }
 }

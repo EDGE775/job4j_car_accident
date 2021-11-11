@@ -1,25 +1,17 @@
 package ru.job4j.accident.repository;
 
+import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.repository.CrudRepository;
 import ru.job4j.accident.model.Accident;
-import ru.job4j.accident.model.AccidentType;
-import ru.job4j.accident.model.Rule;
 
-import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
-public interface AccidentRepository {
-    Accident saveOrUpdateAccident(Accident accident);
+public interface AccidentRepository extends CrudRepository<Accident, Integer> {
 
-    Collection<Accident> findAllAccidents();
+    @EntityGraph(attributePaths = {"type", "rules"})
+    List<Accident> findAllByOrderByIdAsc();
 
-    Accident findAccidentById(int id);
-
-    void deleteAccidentById(int id);
-
-    Collection<AccidentType> findAllAccidentTypes();
-
-    AccidentType findAccidentTypeById(int id);
-
-    Collection<Rule> findAllRules();
-
-    Rule findRuleById(int id);
+    @EntityGraph(attributePaths = {"type", "rules"})
+    Optional<Accident> findById(int id);
 }

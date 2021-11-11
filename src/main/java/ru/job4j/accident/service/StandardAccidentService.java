@@ -1,26 +1,22 @@
 package ru.job4j.accident.service;
 
-import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
-import ru.job4j.accident.repository.AccidentRepository;
+import ru.job4j.accident.repository.StandardAccidentRepositoryInterface;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
-@Service
-public class AccidentService {
+public class StandardAccidentService implements ServiceInterface {
 
-    private final AccidentRepository accidentRepository;
+    private final StandardAccidentRepositoryInterface accidentRepository;
 
-    public AccidentService(AccidentRepository accidentRepository) {
+    public StandardAccidentService(StandardAccidentRepositoryInterface accidentRepository) {
         this.accidentRepository = accidentRepository;
     }
 
+    @Override
     public Accident saveOrUpdateAccident(Accident accident, String[] ids) {
         if (accident == null) {
             throw new IllegalArgumentException("Аргумент не можеть быть null");
@@ -35,10 +31,13 @@ public class AccidentService {
         return accidentRepository.saveOrUpdateAccident(accident);
     }
 
-    public Accident findAccidentById(int id) {
-        return accidentRepository.findAccidentById(id);
+    @Override
+    public Optional<Accident> findAccidentById(int id) {
+        Accident accident = accidentRepository.findAccidentById(id);
+        return Optional.ofNullable(accident);
     }
 
+    @Override
     public List<Accident> findAllAccidents() {
         return accidentRepository.findAllAccidents()
                 .stream()
@@ -46,10 +45,12 @@ public class AccidentService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public AccidentType findAccidentTypeById(int id) {
         return accidentRepository.findAccidentTypeById(id);
     }
 
+    @Override
     public List<AccidentType> findAllAccidentTypes() {
         return accidentRepository.findAllAccidentTypes()
                 .stream()
@@ -57,14 +58,17 @@ public class AccidentService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public void deleteAccidentById(int id) {
         accidentRepository.deleteAccidentById(id);
     }
 
+    @Override
     public Rule findRuleById(int id) {
         return accidentRepository.findRuleById(id);
     }
 
+    @Override
     public List<Rule> findAllRules() {
         return accidentRepository.findAllRules()
                 .stream()
