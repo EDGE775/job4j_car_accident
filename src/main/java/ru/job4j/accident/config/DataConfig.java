@@ -36,14 +36,18 @@ public class DataConfig {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource ds) {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Value("${hibernate.dialect}") String dialect,
+                                                                       @Value("${hibernate.show_sql}") String showSql,
+                                                                       @Value("${hibernate.show_sql}") String formatSql,
+                                                                       @Value("${hibernate.use_sql_comments}") String commentsSql,
+                                                                       DataSource ds) {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(true);
         Properties cfg = new Properties();
-        cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL10Dialect");
-        cfg.setProperty("hibernate.show_sql", "true");
-        cfg.setProperty("hibernate.format_sql", "true");
-        cfg.setProperty("hibernate.use_sql_comments", "true");
+        cfg.setProperty("hibernate.dialect", dialect);
+        cfg.setProperty("hibernate.show_sql", showSql);
+        cfg.setProperty("hibernate.format_sql", formatSql);
+        cfg.setProperty("hibernate.use_sql_comments", commentsSql);
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
         factory.setPackagesToScan("ru.job4j.accident");

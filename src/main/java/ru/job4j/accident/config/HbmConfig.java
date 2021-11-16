@@ -32,16 +32,21 @@ public class HbmConfig {
     }
 
     @Bean
-    public LocalSessionFactoryBean sessionFactory(DataSource ds) {
+    public LocalSessionFactoryBean sessionFactory(@Value("${hibernate.dialect}") String dialect,
+                                                  @Value("${hibernate.show_sql}") String showSql,
+                                                  @Value("${hibernate.show_sql}") String formatSql,
+                                                  @Value("${hibernate.use_sql_comments}") String commentsSql,
+                                                  @Value("${hibernate.hbm2ddl.auto}") String auto,
+                                                  DataSource ds) {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(ds);
         sessionFactory.setPackagesToScan("ru.job4j.accident.model");
         Properties cfg = new Properties();
-        cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL10Dialect");
-        cfg.setProperty("hibernate.show_sql", "true");
-        cfg.setProperty("hibernate.format_sql", "true");
-        cfg.setProperty("hibernate.use_sql_comments", "true");
-        cfg.setProperty("hibernate.hbm2ddl.auto", "update");
+        cfg.setProperty("hibernate.dialect", dialect);
+        cfg.setProperty("hibernate.show_sql", showSql);
+        cfg.setProperty("hibernate.format_sql", formatSql);
+        cfg.setProperty("hibernate.use_sql_comments", commentsSql);
+        cfg.setProperty("hibernate.hbm2ddl.auto", auto);
         sessionFactory.setHibernateProperties(cfg);
         return sessionFactory;
     }
