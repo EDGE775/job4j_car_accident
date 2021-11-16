@@ -8,7 +8,7 @@ import ru.job4j.accident.repository.StandardAccidentRepositoryInterface;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class StandardAccidentService implements ServiceInterface {
+public class StandardAccidentService implements AccidentService {
 
     private final StandardAccidentRepositoryInterface accidentRepository;
 

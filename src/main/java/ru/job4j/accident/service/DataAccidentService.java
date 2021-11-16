@@ -13,7 +13,7 @@ import java.util.*;
 
 @Primary
 @Service
-public class DataAccidentService implements ServiceInterface {
+public class DataAccidentService implements AccidentService {
 
     private final AccidentRepository accidentRepository;
 

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -26,33 +27,20 @@
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Авторизация
+                Регистрация
             </div>
             <div class="card-body">
-                <form name='login' action="<c:url value='/login'/>" method='POST'>
+                <form name='login' action="<c:url value='/reg'/>" method='POST'>
                     <div class="form-group">
-                        <label>UserName:</label>
+                        <label>Имя</label>
                         <input type="text" class="form-control" name="username" required>
                     </div>
                     <div class="form-group">
-                        <label>Password:</label>
+                        <label>Пароль</label>
                         <input type="password" class="form-control" name="password" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Войти</button>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
                 </form>
-                <c:if test="${not empty errorMessage}">
-                    <div style="color:red; font-weight: bold; margin: 30px 0px;">
-                            ${errorMessage}
-                    </div>
-                </c:if>
-            </div>
-            <div class="card-footer">
-                <p>
-                    Нет аккаунта?
-                </p>
-                <a href="<c:url value='/reg'/>"
-                   class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Зарегистрироваться!</a>
             </div>
         </div>
     </div>

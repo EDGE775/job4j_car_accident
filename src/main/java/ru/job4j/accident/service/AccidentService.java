@@ -7,7 +7,7 @@ import ru.job4j.accident.model.Rule;
 import java.util.List;
 import java.util.Optional;
 
-public interface ServiceInterface {
+public interface AccidentService {
     Accident saveOrUpdateAccident(Accident accident, String[] ids);
 
     Optional<Accident> findAccidentById(int id);
