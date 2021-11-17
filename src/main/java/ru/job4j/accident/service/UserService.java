@@ -8,4 +8,6 @@ public interface UserService {
     Authority findByAuthorityName(String name);
 
     User saveUser(User user);
+
+    User findUserByName(String name);
 }

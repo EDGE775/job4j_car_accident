@@ -28,4 +28,9 @@ public class DataUserService implements UserService {
     public User saveUser(User user) {
         return userRepository.save(user);
     }
+
+    @Override
+    public User findUserByName(String name) {
+        return userRepository.findByUsername(name);
+    }
 }
